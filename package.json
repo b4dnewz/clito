@@ -1,0 +1,64 @@
+{
+  "name": "clito",
+  "version": "0.1.0",
+  "description": "Simple and well written command line applications helper",
+  "homepage": "https://github.com/b4dnewz/clito",
+  "main": "index.js",
+  "scripts": {
+    "pretest": "npm run lint",
+    "lint": "eslint . --fix",
+    "test": "jest --coverage",
+    "report": "cat ./coverage/lcov.info | coveralls"
+  },
+  "author": {
+    "name": "b4dnewz",
+    "email": "filippo@codekraft.it",
+    "url": "https://b4dnewz.github.io/"
+  },
+  "repository": "b4dnewz/clito",
+  "license": "MIT",
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "cli",
+    "bin",
+    "util",
+    "utility",
+    "helper",
+    "argv",
+    "command",
+    "command-line",
+    "parser",
+    "option",
+    "flags",
+    "input",
+    "cmd",
+    "console"
+  ],
+  "dependencies": {
+    "indent-string": "^3.2.0",
+    "read-pkg-up": "^5.0.0",
+    "yargs-parser": "^13.0.0"
+  },
+  "devDependencies": {
+    "coveralls": "^3.0.3",
+    "eslint": "^5.15.3",
+    "jest": "^24.5.0"
+  },
+  "eslintConfig": {
+    "extends": "eslint:recommended",
+    "env": {
+      "es6": true,
+      "node": true,
+      "jest": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 9,
+      "sourceType": "module"
+    },
+    "rules": {
+      "semi": "error"
+    }
+  }
+}

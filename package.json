@@ -4,6 +4,7 @@
   "description": "Simple and well written command line applications helper",
   "homepage": "https://github.com/b4dnewz/clito",
   "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
     "pretest": "npm run lint",
     "lint": "eslint . --fix",

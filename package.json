@@ -1,6 +1,6 @@
 {
   "name": "clito",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Simple and well written command line applications helper",
   "homepage": "https://github.com/b4dnewz/clito",
   "main": "index.js",

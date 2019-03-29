@@ -19,6 +19,7 @@ Oops.. move along children, you are holding up the line, let see some features n
 - Boolean defaults to false
 - Support required options
 - Support multiple option arguments
+- Support for option value validation
 - Negates flags when using the `--no-` prefix
 - Outputs version when `--version`
 - Build help string from options when called with `--help`
@@ -102,6 +103,7 @@ Example flag:
     alias: 'f',
     description: 'A foo option',
     default: 'bar',
+    validation: (v) => true,
     required: false,
     multiple: false
   }
@@ -126,6 +128,13 @@ Set a custom usage string to be used in `--help` message.
 Type: `String, String[]`
 
 Add custom command usage examples to be appended on bottom of `--help` message.
+
+#### indentation
+
+Type: `Number`  
+Default: `0`
+
+Set the indentation size used in the built-in help message.
 
 #### showVersion
 

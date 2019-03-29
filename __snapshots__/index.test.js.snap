@@ -2,6 +2,7 @@
 
 exports[`clito --help support built in commands help 1`] = `
 "  clito v0.1.0
+
   Simple and well written command line applications helper
 
   Usage:
@@ -9,22 +10,46 @@ exports[`clito --help support built in commands help 1`] = `
 
   Options:
     --foo, -f  Prints bar
-    --bar  "
+    --bar      
+
+"
+`;
+
+exports[`clito --help support custom banner 1`] = `
+"  A TEST COMMAND
+
+  clito v0.1.0
+
+  Simple and well written command line applications helper
+
+  Usage:
+    $ clito <input>
+
+  Options:
+    --foo  a test option
+
+"
 `;
 
 exports[`clito --help support custom usage string 1`] = `
 "  clito v0.1.0
+
   Simple and well written command line applications helper
 
   Usage:
     $ foo <input>
 
   Options:
-    --foo  a test option"
+    --foo  a test option
+    --bar  another test option
+    --baz  
+
+"
 `;
 
 exports[`clito --help support multiple custom usage examples 1`] = `
 "  clito v0.1.0
+
   Simple and well written command line applications helper
 
   Usage:
@@ -40,6 +65,7 @@ exports[`clito --help support multiple custom usage examples 1`] = `
 
 exports[`clito --help support single custom usage example 1`] = `
 "  clito v0.1.0
+
   Simple and well written command line applications helper
 
   Usage:

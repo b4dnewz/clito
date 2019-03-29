@@ -16,6 +16,8 @@ module.exports = function(options) {
 			normalize: false
 		}).pkg || {},
     argv: process.argv.slice(2),
+    showHelp: true,
+    showVersion: true,
     ...options
   };
 
@@ -42,12 +44,64 @@ module.exports = function(options) {
     return [key, flags[key]];
   });
 
+  // Return the command banner with name, version and description
+  // separated by one blank line and optionally preceeded by custom text
+  const getBanner = function() {
+    return [
+      options.banner,
+      getVersion(),
+      options.description || options.pkg.description
+    ].filter(v => v && v !== '').join('\n\n');
+  };
+
+  // Return the command usage string
+  const getUsage = function() {
+    const pkgName = options.name || options.pkg.name;
+    const usage = options.usage || `$ ${pkgName} <input>`;
+    return ['Usage:', indent(usage, 2)].join('\n');
+  };
+
+  // Return the usage examples string
+  const getExamples = function() {
+    const {examples} = options;
+    if (!examples) {
+      return '';
+    }
+
+    const outStr = (
+      Array.isArray(examples)
+        ? examples
+        : [examples]
+    ).map(s => indent(s, 2)).join('\n');
+
+    return ['Examples:', outStr].join('\n');
+  };
+
   // Return application name and version
   const getVersion = function() {
     const {name, version} =  options.pkg;
     const nameStr = (options.name || name) + ' ';
     const versionStr = `v${(options.version || version)}`;
     return nameStr + versionStr;
+  };
+
+  // Return the options usage string
+  const getOptionsHelp = function() {
+    const optNames = flagsArr.map(([name, opts]) => {
+      const {alias, description} = opts;
+      let outStr = [`--${name}`];
+      alias && outStr.push(`-${alias}`);
+      outStr = outStr.join(', ');
+      return [outStr, description];
+    });
+
+    // Pad output strings using max width plus two spaces
+    const maxWidth = optNames.reduce((max, [cur]) => cur.length > max ? cur.length : max, 0);
+    const outStr = optNames.map(([opt, desc]) => {
+      return opt.padEnd(maxWidth + 2) + (desc || '');
+    }).join('\n');
+
+    return ['Options:', indent(outStr, 2)].join('\n');
   };
 
   // Print application name and version
@@ -59,40 +113,13 @@ module.exports = function(options) {
 
   // Print command usage string and options help
   const showHelp = function() {
-    const bannerStr = [
-      getVersion(),
-      options.description || options.pkg.description
-    ].join('\n');
-    const pkgName = options.name || options.pkg.name;
-    const usage = options.usage || `$ ${pkgName} <input>`;
-    const usageStr = ['Usage:', indent(usage, 2)].join('\n');
-    const optsStr = flagsArr.map(f => {
-      const [name, opts] = f;
-      const {alias, description} = opts;
-      let opt = [`--${name}`];
-      alias && opt.push(`-${alias}`);
-      return opt.join(', ') + '  ' + (description || '');
-    }).join('\n');
-    const optOut = ['Options:', indent(optsStr, 2)].join('\n');
+    const out = [
+      getBanner(),
+      getUsage(),
+      getOptionsHelp(),
+      getExamples()
+    ].join('\n\n');
 
-    let out = [
-      bannerStr,
-      usageStr,
-      optOut
-    ];
-
-    if (options.examples) {
-      const examplesStr = (Array.isArray(options.examples) ?
-        options.examples :
-        [options.examples]).map(s => indent(s, 2)).join('\n');
-      const exampleStr = [
-        'Examples:',
-        examplesStr
-      ].join('\n');
-      out.push(exampleStr);
-    }
-
-    out = out.join('\n\n');
     // eslint-disable-next-line
     console.log(indent(out, 2));
     process.exit();
@@ -132,12 +159,12 @@ module.exports = function(options) {
   const {_: input, ...args} = yargs(options.argv, parserOpts);
 
   // Print application version
-  if (args.version) {
+  if (args.version && options.showVersion) {
     showVersion();
   }
 
   // If --help has been passed as flag
-  if (args.help) {
+  if (args.help && options.showHelp) {
     showHelp();
   }
 

@@ -163,10 +163,18 @@ describe('clito', function() {
   });
 
   describe('--version', function() {
-    let consoleMock = jest.spyOn(console, 'log').mockImplementation(v => v);
+    let consoleMock = jest.spyOn(console, 'log');
 
     afterEach(function() {
       consoleMock.mockClear();
+    });
+
+    it('can be disabled', function() {
+      clito({
+        argv: ['--version'],
+        showVersion: false
+      });
+      expect(consoleMock).not.toHaveBeenCalled();
     });
 
     it('output program version', function() {
@@ -188,11 +196,26 @@ describe('clito', function() {
 
   describe('--help', function() {
     let exitMock = jest.spyOn(process, 'exit').mockImplementation(() => {});
-    let consoleMock = jest.spyOn(console, 'log').mockImplementation(v => v);
+    let consoleMock = jest.spyOn(console, 'log');
 
     afterEach(function() {
       exitMock.mockClear();
       consoleMock.mockClear();
+    });
+
+    it('can be disabled', function() {
+      clito({
+        argv: ['--help'],
+        showHelp: false,
+        flags: {
+          foo: {
+            type: 'string',
+            description: 'Prints bar'
+          }
+        }
+      });
+      expect(consoleMock).not.toHaveBeenCalled();
+      expect(exitMock).toHaveBeenCalled();
     });
 
     it('support built in commands help', function() {
@@ -222,6 +245,13 @@ describe('clito', function() {
           foo: {
             type: 'boolean',
             description: 'a test option'
+          },
+          bar: {
+            type: 'boolean',
+            description: 'another test option'
+          },
+          baz: {
+            type: 'string'
           }
         }
       });
@@ -254,6 +284,21 @@ describe('clito', function() {
           }
         },
         examples: ['foo -foo', 'foo --no-foo']
+      });
+      expect(consoleMock.mock.calls[0][0]).toMatchSnapshot();
+      expect(exitMock).toHaveBeenCalled();
+    });
+
+    it('support custom banner', function() {
+      clito({
+        banner: 'A TEST COMMAND',
+        argv: ['--help'],
+        flags: {
+          foo: {
+            type: 'boolean',
+            description: 'a test option'
+          }
+        }
       });
       expect(consoleMock.mock.calls[0][0]).toMatchSnapshot();
       expect(exitMock).toHaveBeenCalled();

@@ -42,15 +42,27 @@ const cli = clito({
   usage: 'askme <question>',
   flags: {
     person: {
+      type: 'string',
       alias: 'p',
       default: 'chef'
     }
-  }
+  },
+  examples: [
+    'askme -p "ghandi" "Do you ever got angry?"'
+  ]
 })
 
 const {input, flags} = cli
+const [question] = input
+if (!question || question === '') {
+  console.error('You must ask a question first!');
+  process.exit(1);
+}
+
 if (flags.person === 'chef') {
   console.log('> You gotta find the clitoris children.');
+} else {
+  // evaluate question and answer it
 }
 ```
 
@@ -60,6 +72,74 @@ Than run it with some input and options:
 $ node ./index.js "How do you make a girl love you more than other people?"
 > You gotta find the clitoris children.
 ```
+
+## Options
+
+The module can accept various options to customize the behavior or help string output.
+
+#### flags
+
+Type: `Object`  
+Required: `true`
+
+An object of name paired flags that are going to be used as command options and parsed.
+
+A flag itself it's an object than can take various properties to describe how the flag should be parsed and outputted in help message:
+
+* __type__: The flag type that should be returned from parsing (_this field is required_)
+* __alias__: An alias for the flag (_dashes are added automatically_)
+* __description__: The flag description used in the help message
+* __default__: The flag default value in case not specified
+* __required__: Identify the flag as required, will throw an error if flag is missing
+* __multiple__: specify that the flag accept multiple arguments and should be parsed as array
+
+Example flag:
+
+```js
+{
+  foo: {
+    type: 'string',
+    alias: 'f',
+    description: 'A foo option',
+    default: 'bar',
+    required: false,
+    multiple: false
+  }
+}
+```
+
+#### banner
+
+Type: `String`  
+
+Add a custom banner string to be printed on top of `--help` message.
+
+#### usage
+
+Type: `String`  
+Default: `$ {pkg.name} <input>`
+
+Set a custom usage string to be used in `--help` message.
+
+#### examples
+
+Type: `String, String[]`
+
+Add custom command usage examples to be appended on bottom of `--help` message.
+
+#### showVersion
+
+Type: `Boolean`  
+Default: `true`
+
+Shows the command version when called with `--version`.
+
+#### showHelp
+
+Type: `Boolean`  
+Default: `true`
+
+Shows the built-in command help when called with `--help`.
 
 ---
 

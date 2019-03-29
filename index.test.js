@@ -162,10 +162,54 @@ describe('clito', function() {
     }).toThrowError('Option "bar" is required');
   });
 
+  it('support option argument validation', function() {
+    const validation = v => ['bar', 'baz'].includes(v);
+    expect(() => {
+      clito({
+        argv: ['--foo', 'bar'],
+        flags: {
+          foo: {
+            type: 'string',
+            validation
+          },
+        }
+      });
+    }).not.toThrowError();
+
+    expect(() => {
+      clito({
+        argv: ['--foo', 'bat'],
+        flags: {
+          foo: {
+            type: 'string',
+            validation
+          },
+        }
+      });
+    }).toThrowError('Invalid value "bat" for option "foo".');
+  });
+
+  it('support custom validation error message', function() {
+    const values = ['bar', 'baz'];
+    const validationMessage = `Invalid value, possible values are: [${values.join(',')}]`;
+    const validation = v => ['bar', 'baz'].includes(v) || `Invalid value, possible values are: [${values.join(',')}]`;
+    expect(() => {
+      clito({
+        argv: ['--foo', 'bat'],
+        flags: {
+          foo: {
+            type: 'string',
+            validation
+          },
+        }
+      });
+    }).toThrowError(validationMessage);
+  });
+
   describe('--version', function() {
     let consoleMock = jest.spyOn(console, 'log');
 
-    afterEach(function() {
+    beforeEach(function() {
       consoleMock.mockClear();
     });
 
@@ -198,7 +242,7 @@ describe('clito', function() {
     let exitMock = jest.spyOn(process, 'exit').mockImplementation(() => {});
     let consoleMock = jest.spyOn(console, 'log');
 
-    afterEach(function() {
+    beforeEach(function() {
       exitMock.mockClear();
       consoleMock.mockClear();
     });
@@ -215,7 +259,7 @@ describe('clito', function() {
         }
       });
       expect(consoleMock).not.toHaveBeenCalled();
-      expect(exitMock).toHaveBeenCalled();
+      expect(exitMock).not.toHaveBeenCalled();
     });
 
     it('support built in commands help', function() {

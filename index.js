@@ -9,13 +9,19 @@ const readPkgUp = require('read-pkg-up');
 delete require.cache[__filename];
 const parentDir = path.dirname(module.parent.filename);
 
-module.exports = function(options) {
+/**
+ * Command line application helper for single commands
+ * parses given flags, fail on missing required option
+ * support customizable built-in help message generation
+ */
+const clito = function(options) {
   options = {
     pkg: readPkgUp.sync({
 			cwd: parentDir,
 			normalize: false
 		}).pkg || {},
     argv: process.argv.slice(2),
+    indentation: 0,
     showHelp: true,
     showVersion: true,
     ...options
@@ -57,7 +63,7 @@ module.exports = function(options) {
   // Return the command usage string
   const getUsage = function() {
     const pkgName = options.name || options.pkg.name;
-    const usage = options.usage || `$ ${pkgName} <input>`;
+    const usage = options.usage || `$ ${pkgName} [options] <input>`;
     return ['Usage:', indent(usage, 2)].join('\n');
   };
 
@@ -79,9 +85,9 @@ module.exports = function(options) {
 
   // Return application name and version
   const getVersion = function() {
-    const {name, version} =  options.pkg;
-    const nameStr = (options.name || name) + ' ';
-    const versionStr = `v${(options.version || version)}`;
+    const {pkg} =  options;
+    const nameStr = (options.name || pkg.name) + ' ';
+    const versionStr = `v${(options.version || pkg.version)}`;
     return nameStr + versionStr;
   };
 
@@ -121,7 +127,7 @@ module.exports = function(options) {
     ].join('\n\n');
 
     // eslint-disable-next-line
-    console.log(indent(out, 2));
+    console.log(indent(out, options.indentation));
     process.exit();
   };
 
@@ -170,8 +176,21 @@ module.exports = function(options) {
 
   // Check for required options
   flagsArr.forEach(function([flagName, flagOpts]) {
-    if (flagOpts.required && typeof args[flagName] === 'undefined') {
+    const flagValue = args[flagName];
+    const isDefined = typeof flagValue !== 'undefined';
+    if (flagOpts.required && isDefined === false) {
       throw new Error(`Option "${flagName}" is required.`);
+    }
+
+    // Optionally validate parsed option value
+    if (isDefined && flagOpts.validation) {
+      const isValid = flagOpts.validation(flagValue);
+      if (isValid !== true) {
+        const err = typeof isValid === 'string' ?
+          isValid :
+          `Invalid value "${flagValue}" for option "${flagName}".`;
+        throw new Error(err);
+      }
     }
   });
 
@@ -180,3 +199,9 @@ module.exports = function(options) {
     flags: args
   };
 };
+
+/**
+ * Export module
+ */
+module.exports = clito;
+module.exports.default = clito;

@@ -1,79 +1,79 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`clito --help support built in commands help 1`] = `
-"  clito v0.1.0
+"clito v0.1.0
 
-  Simple and well written command line applications helper
+Simple and well written command line applications helper
 
-  Usage:
-    $ clito <input>
+Usage:
+  $ clito [options] <input>
 
-  Options:
-    --foo, -f  Prints bar
-    --bar      
+Options:
+  --foo, -f  Prints bar
+  --bar      
 
 "
 `;
 
 exports[`clito --help support custom banner 1`] = `
-"  A TEST COMMAND
+"A TEST COMMAND
 
-  clito v0.1.0
+clito v0.1.0
 
-  Simple and well written command line applications helper
+Simple and well written command line applications helper
 
-  Usage:
-    $ clito <input>
+Usage:
+  $ clito [options] <input>
 
-  Options:
-    --foo  a test option
+Options:
+  --foo  a test option
 
 "
 `;
 
 exports[`clito --help support custom usage string 1`] = `
-"  clito v0.1.0
+"clito v0.1.0
 
-  Simple and well written command line applications helper
+Simple and well written command line applications helper
 
-  Usage:
-    $ foo <input>
+Usage:
+  $ foo <input>
 
-  Options:
-    --foo  a test option
-    --bar  another test option
-    --baz  
+Options:
+  --foo  a test option
+  --bar  another test option
+  --baz  
 
 "
 `;
 
 exports[`clito --help support multiple custom usage examples 1`] = `
-"  clito v0.1.0
+"clito v0.1.0
 
-  Simple and well written command line applications helper
+Simple and well written command line applications helper
 
-  Usage:
-    $ clito <input>
+Usage:
+  $ clito [options] <input>
 
-  Options:
-    --foo  a test option
+Options:
+  --foo  a test option
 
-  Examples:
-    foo -foo
-    foo --no-foo"
+Examples:
+  foo -foo
+  foo --no-foo"
 `;
 
 exports[`clito --help support single custom usage example 1`] = `
-"  clito v0.1.0
+"clito v0.1.0
 
-  Simple and well written command line applications helper
+Simple and well written command line applications helper
 
-  Usage:
-    $ clito <input>
+Usage:
+  $ clito [options] <input>
 
-  Options:
-    --foo  a test option
+Options:
+  --foo  a test option
 
-  Examples:
-    foo -foo"
+Examples:
+  foo -foo"
 `;

@@ -4,7 +4,7 @@
 
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Coverage percentage][coveralls-image]][coveralls-url] [![Project License][license-image]][license-url]
 
-## What's a clito?
+## What is clito?
 
 __Clito__, pronounced as in "clitoris", stands for __cli-tools__ and it's a well written command line application helper.
 It will become your best friend when dealing with cli applications, once you start play with it you will like it more than any other tool. :smirk:

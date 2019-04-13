@@ -45,9 +45,9 @@ const clito = function(options) {
   };
 
   // Prepare flags for reducing into parser options
-  const flags = options.flags || {};
-  const flagsArr = Object.keys(flags).map(function(key) {
-    return [key, flags[key]];
+  const inputFlags = options.flags || {};
+  const flagsArr = Object.keys(inputFlags).map(function(key) {
+    return [key, inputFlags[key]];
   });
 
   // Return the command banner with name, version and description
@@ -175,28 +175,38 @@ const clito = function(options) {
   }
 
   // Check for required options
-  flagsArr.forEach(function([flagName, flagOpts]) {
+  const flags = flagsArr.reduce(function(obj, [flagName, flagOpts]) {
     const flagValue = args[flagName];
     const isDefined = typeof flagValue !== 'undefined';
-    if (flagOpts.required && isDefined === false) {
+
+    // Verify if option is required
+    if (!isDefined && flagOpts.required) {
       throw new Error(`Option "${flagName}" is required.`);
     }
 
-    // Optionally validate parsed option value
-    if (isDefined && flagOpts.validation) {
-      const isValid = flagOpts.validation(flagValue);
-      if (isValid !== true) {
-        const err = typeof isValid === 'string' ?
-          isValid :
-          `Invalid value "${flagValue}" for option "${flagName}".`;
-        throw new Error(err);
+    if (isDefined) {
+      // Optionally validate parsed option value
+      if (flagOpts.validation) {
+        const isValid = flagOpts.validation(flagValue);
+        if (isValid !== true) {
+          const err = typeof isValid === 'string' ?
+            isValid :
+            `Invalid value "${flagValue}" for option "${flagName}".`;
+          throw new Error(err);
+        }
       }
+
+      // Finally assign flag to object
+      obj[flagOpts.alias || flagName] = flagValue;
+      obj[flagName] = flagValue;
     }
-  });
+
+    return obj;
+  }, {});
 
   return {
     input,
-    flags: args
+    flags
   };
 };
 

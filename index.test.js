@@ -206,6 +206,27 @@ describe('clito', function() {
     }).toThrowError(validationMessage);
   });
 
+  it('should normalize flag names', function() {
+    expect(clito({
+      args: [
+        "--foo-bar",
+        "--foo-baz",
+      ],
+      flags: {
+        fooBar: {
+          type: 'boolean'
+        },
+        fooBaz: {
+          type: 'boolean',
+          default: true
+        }
+      }
+    }).flags).toEqual({
+      fooBar: false,
+      fooBaz: true
+    });
+  });
+
   describe('--version', function() {
     let consoleMock = jest.spyOn(console, 'log');
 

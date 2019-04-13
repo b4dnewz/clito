@@ -271,6 +271,7 @@ describe('clito', function() {
     it('can be disabled', function() {
       clito({
         argv: ['--help'],
+        version: '0.0.0',
         showHelp: false,
         flags: {
           foo: {
@@ -286,6 +287,7 @@ describe('clito', function() {
     it('support built in commands help', function() {
       clito({
         argv: ['--help'],
+        version: '0.0.0',
         flags: {
           foo: {
             type: 'string',
@@ -305,6 +307,7 @@ describe('clito', function() {
     it('support custom usage string', function() {
       clito({
         argv: ['--help'],
+        version: '0.0.0',
         usage: '$ foo <input>',
         flags: {
           foo: {
@@ -327,6 +330,7 @@ describe('clito', function() {
     it('support single custom usage example', function() {
       clito({
         argv: ['--help'],
+        version: '0.0.0',
         flags: {
           foo: {
             type: 'boolean',
@@ -342,6 +346,7 @@ describe('clito', function() {
     it('support multiple custom usage examples', function() {
       clito({
         argv: ['--help'],
+        version: '0.0.0',
         flags: {
           foo: {
             type: 'boolean',
@@ -358,6 +363,7 @@ describe('clito', function() {
       clito({
         banner: 'A TEST COMMAND',
         argv: ['--help'],
+        version: '0.0.0',
         flags: {
           foo: {
             type: 'boolean',

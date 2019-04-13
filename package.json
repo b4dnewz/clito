@@ -1,12 +1,13 @@
 {
   "name": "clito",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Simple and well written command line applications helper",
   "homepage": "https://github.com/b4dnewz/clito",
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
     "pretest": "npm run lint",
+    "prepublish": "npm run test",
     "lint": "eslint . --fix",
     "test": "jest --coverage",
     "report": "cat ./coverage/lcov.info | coveralls"

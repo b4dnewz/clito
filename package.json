@@ -19,7 +19,8 @@
   "repository": "b4dnewz/clito",
   "license": "MIT",
   "files": [
-    "index.js"
+    "index.js",
+    "index.d.ts"
   ],
   "keywords": [
     "cli",

@@ -121,7 +121,7 @@ export interface Result {
    * Parsed command options
    */
   flags: {
-    [name: string]: unknown
+    [name: string]: any
   }
 
 }

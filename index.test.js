@@ -5,6 +5,18 @@ describe('clito', function() {
     expect(typeof clito).toEqual('function');
   });
 
+  it('throw an error when type property is missing', function() {
+    expect(function() {
+      clito({
+        flags: {
+          foo: {
+            default: false
+          }
+        }
+      });
+    }).toThrowError(/flag is missing type property/);
+  });
+
   it('boolean flags are false by default', function() {
     const res = clito({
       argv: ['--foo'],

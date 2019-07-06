@@ -141,6 +141,10 @@ const clito = function(options) {
       default: defaultValue,
     } = flagOptions;
 
+    if (typeof type === 'undefined') {
+      throw new Error(`The "${flagName}" flag is missing type property.`);
+    }
+
     if (multiple) {
       obj.array.push({
         key: flagName,

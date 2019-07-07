@@ -97,6 +97,22 @@ describe('clito', function() {
     });
   });
 
+  it('support boolean negation flags', function() {
+    expect(clito({
+      argv: [
+        '--no-cors'
+      ],
+      flags: {
+        cors: {
+          type: 'boolean',
+          default: true
+        }
+      }
+    }).flags).toMatchObject({
+      cors: false
+    });
+  });
+
   it('support grouped flags', function() {
     const res = clito({
       argv: ['-fb'],

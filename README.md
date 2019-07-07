@@ -91,6 +91,7 @@ A flag itself it's an object than can take various properties to describe how th
 * __alias__: An alias for the flag (_dashes are added automatically_)
 * __description__: The flag description used in the help message
 * __default__: The flag default value in case not specified
+* __validation__: A validation function for the flag parsed value
 * __required__: Identify the flag as required, will throw an error if flag is missing
 * __multiple__: specify that the flag accept multiple arguments and should be parsed as array
 

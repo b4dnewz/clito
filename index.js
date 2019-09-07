@@ -19,7 +19,7 @@ const clito = function(options) {
     pkg: readPkgUp.sync({
 			cwd: parentDir,
 			normalize: false
-		}).pkg || {},
+		}).package || {},
     argv: process.argv.slice(2),
     indentation: 0,
     showHelp: true,

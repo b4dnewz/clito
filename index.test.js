@@ -1,20 +1,10 @@
+const fs = require('fs');
+const path = require('path');
 const clito = require('./index');
 
 describe('clito', function() {
   it('export a function', function() {
     expect(typeof clito).toEqual('function');
-  });
-
-  it('throw an error when type property is missing', function() {
-    expect(function() {
-      clito({
-        flags: {
-          foo: {
-            default: false
-          }
-        }
-      });
-    }).toThrowError(/flag is missing type property/);
   });
 
   it('boolean flags are false by default', function() {
@@ -243,6 +233,19 @@ describe('clito', function() {
       fooBar: true,
       fooBaz: true
     });
+  });
+
+  it('should support configuration file', function() {
+    const configPath = path.resolve(__dirname, './config.json');
+    const configContent = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
+    expect(clito({
+      argv: ['--config', configPath],
+      flags: {
+        foo: {
+          description: 'Valid only with configuration file'
+        }
+      }
+    }).flags).toEqual(configContent);
   });
 
   describe('--version', function() {

@@ -35,6 +35,9 @@ const clito = function(options) {
     default: {},
     string: [],
     number: [],
+    config: {
+      [options.config || 'config']: true
+    },
     configuration: {
       'short-option-groups': true,
       'camel-case-expansion': true,
@@ -141,8 +144,14 @@ const clito = function(options) {
       default: defaultValue,
     } = flagOptions;
 
+    /**
+     * To allow for configuration objects via the configuration file
+     * if the type is not set just return without adding the key
+     * to the parser configuration object, if the key is set via
+     * the configuration file it will be automatically populated later
+     */
     if (typeof type === 'undefined') {
-      throw new Error(`The "${flagName}" flag is missing type property.`);
+      return obj;
     }
 
     if (multiple) {

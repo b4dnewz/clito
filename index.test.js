@@ -161,16 +161,6 @@ describe('clito', function() {
     }).flags).toMatchObject({
       foo: ['a', 'b']
     });
-
-    expect(clito({
-      argv: [
-        '--foo=a',
-        '--foo=b'
-      ],
-      flags
-    }).flags).toMatchObject({
-      foo: ['a', 'b']
-    });
   });
 
   it('support required options', function() {
@@ -236,7 +226,7 @@ describe('clito', function() {
 
   it('should normalize flag names', function() {
     expect(clito({
-      args: [
+      argv: [
         "--foo-bar",
         "--foo-baz",
       ],
@@ -250,7 +240,7 @@ describe('clito', function() {
         }
       }
     }).flags).toEqual({
-      fooBar: false,
+      fooBar: true,
       fooBaz: true
     });
   });

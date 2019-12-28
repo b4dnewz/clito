@@ -1,67 +1,68 @@
 {
-  "name": "clito",
-  "version": "0.2.0",
-  "description": "Simple and well written command line applications helper",
-  "homepage": "https://github.com/b4dnewz/clito",
-  "main": "index.js",
-  "types": "index.d.ts",
-  "scripts": {
-    "pretest": "npm run lint",
-    "prepublish": "npm run test",
-    "lint": "eslint . --fix",
-    "test": "jest --coverage",
-    "report": "cat ./coverage/lcov.info | coveralls"
-  },
-  "author": {
-    "name": "b4dnewz",
-    "email": "filippo@codekraft.it",
-    "url": "https://b4dnewz.github.io/"
-  },
-  "repository": "b4dnewz/clito",
-  "license": "MIT",
-  "files": [
-    "index.js",
-    "index.d.ts"
-  ],
-  "keywords": [
-    "cli",
-    "bin",
-    "util",
-    "utility",
-    "helper",
-    "argv",
-    "command",
-    "command-line",
-    "parser",
-    "option",
-    "flags",
-    "input",
-    "cmd",
-    "console"
-  ],
-  "dependencies": {
-    "indent-string": "^4.0.0",
-    "read-pkg-up": "^6.0.0",
-    "yargs-parser": "^14.0.0"
-  },
-  "devDependencies": {
-    "coveralls": "^3.0.6",
-    "eslint": "^6.3.0",
-    "jest": "^24.9.0"
-  },
-  "eslintConfig": {
-    "extends": "eslint:recommended",
-    "env": {
-      "es6": true,
-      "node": true,
-      "jest": true
+    "name": "clito",
+    "version": "0.2.0",
+    "description": "Simple and well written command line applications helper",
+    "homepage": "https://github.com/b4dnewz/clito",
+    "main": "index.js",
+    "types": "index.d.ts",
+    "scripts": {
+        "pretest": "npm run lint",
+        "prepublish": "npm run test",
+        "lint": "eslint . --fix",
+        "test": "jest --coverage",
+        "report": "cat ./coverage/lcov.info | coveralls"
     },
-    "parserOptions": {
-      "ecmaVersion": 9,
-      "sourceType": "module"
+    "author": {
+        "name": "b4dnewz",
+        "email": "filippo@codekraft.it",
+        "url": "https://b4dnewz.github.io/"
     },
-    "rules": {
-      "semi": "error"
+    "repository": "b4dnewz/clito",
+    "license": "MIT",
+    "files": [
+        "index.js",
+        "index.d.ts"
+    ],
+    "keywords": [
+        "cli",
+        "bin",
+        "util",
+        "utility",
+        "helper",
+        "argv",
+        "command",
+        "command-line",
+        "parser",
+        "option",
+        "flags",
+        "input",
+        "cmd",
+        "console"
+    ],
+    "dependencies": {
+        "indent-string": "^4.0.0",
+        "read-pkg-up": "^6.0.0",
+        "yargs-parser": "^14.0.0"
+    },
+    "devDependencies": {
+        "@b4dnewz/temp": "0.0.3",
+        "coveralls": "^3.0.9",
+        "eslint": "^6.8.0",
+        "jest": "^24.9.0"
+    },
+    "eslintConfig": {
+        "extends": "eslint:recommended",
+        "env": {
+            "es6": true,
+            "node": true,
+            "jest": true
+        },
+        "parserOptions": {
+            "ecmaVersion": 9,
+            "sourceType": "module"
+        },
+        "rules": {
+            "semi": "error"
+        }
     }
-  }
 }
